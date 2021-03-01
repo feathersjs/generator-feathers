@@ -76,4 +76,8 @@ module.exports = class UpgradeGenerator extends Generator {
       save: true
     });
   }
+  
+  end () {
+    this._runLintIfAvailable();
+  }
 };

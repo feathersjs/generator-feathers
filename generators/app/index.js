@@ -128,10 +128,11 @@ module.exports = class AppGenerator extends Generator {
       default: 'eslint',
       choices: [
         { name: 'ESLint', value: 'eslint' },
+        { name: 'ESLint with custom config', value: 'custom-eslint' },
         { name: 'StandardJS', value: 'standard'  }
       ],
     }];
-
+    
     return this.prompt(prompts).then(props => {
       props = Object.assign({}, this.props, props, {
         linter: 'eslint'
@@ -140,6 +141,28 @@ module.exports = class AppGenerator extends Generator {
       if (props.language === 'js') {
         return this.prompt(jsPrompts).then(jsProps => {
           return Object.assign({}, props, jsProps);
+        });
+      } else {
+        return props;
+      }
+    }).then(props => {
+      if (props.linter === 'custom-eslint') {
+        props = Object.assign({}, this.props, props, {
+          linter: 'eslint'
+        });
+        
+        const defaultESLintConfig = JSON.stringify(makeConfig.eslintrc({ props }), null, 4);
+
+        const customESLintPrompts = [{
+          type: 'editor',
+          name: 'customESLintConfig',
+          message: 'Edit the generated contents of .eslintrc.json:',
+          default: defaultESLintConfig,
+          filter: JSON.parse
+        }];
+    
+        return this.prompt(customESLintPrompts).then(customESLintProps => {
+          return Object.assign({}, props, customESLintProps);
         });
       } else {
         return props;
@@ -205,12 +228,19 @@ module.exports = class AppGenerator extends Generator {
     }
     
     if (props.linter === 'eslint') {
-      this.fs.writeJSON(
-        this.destinationPath('.eslintrc.json'),
-        makeConfig.eslintrc(this)
-      );
+      if (props.customESLintConfig) {
+        this.fs.writeJSON(
+          this.destinationPath('.eslintrc.json'),
+          props.customESLintConfig
+        );
+      } else {
+        this.fs.writeJSON(
+          this.destinationPath('.eslintrc.json'),
+          makeConfig.eslintrc(this)
+        );
+      }
     }
-
+    
     this.fs.writeJSON(
       this.destinationPath(this.configDirectory, 'default.json'),
       makeConfig.configDefault(this)
@@ -282,14 +312,6 @@ module.exports = class AppGenerator extends Generator {
   }
 
   end () {
-    if (this.isTypescript && this.props.linter !== 'eslint') return;
-    
-    const [ packager, ] = this.props.packager.split('@');
-
-    if (packager === 'yarn') {
-      this.spawnCommand(packager, ['run', 'lint', '--fix']);
-    } else {
-      this.spawnCommand(packager, ['run', 'lint', '--', '--fix']);
-    }
+    this._runLintIfAvailable();
   }
 };

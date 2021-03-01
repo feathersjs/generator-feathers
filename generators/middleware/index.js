@@ -95,4 +95,8 @@ module.exports = class MiddlewareGenerator extends Generator {
       mainFile, context
     );
   }
+  
+  end () {
+    this._runLintIfAvailable();
+  }
 };

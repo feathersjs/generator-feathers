@@ -382,6 +382,8 @@ module.exports = class ConnectionGenerator extends Generator {
   }
 
   end () {
+    this._runLintIfAvailable();
+    
     const { database, connectionString } = this.props;
 
     // NOTE (EK): If this is the first time we set this up

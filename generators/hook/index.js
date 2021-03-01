@@ -195,4 +195,8 @@ module.exports = class HookGenerator extends Generator {
       mainFile, context
     );
   }
+  
+  end () {
+    this._runLintIfAvailable();
+  }
 };
