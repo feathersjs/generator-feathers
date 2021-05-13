@@ -32,7 +32,7 @@
     "url": "https://github.com/feathersjs/generator-feathers/issues"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 12.0.0"
   },
   "scripts": {
     "publish": "git push origin --tags && npm run changelog && git push origin",
@@ -43,14 +43,15 @@
     "changelog": "github_changelog_generator -u feathersjs -p generator-feathers && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "eslint": "eslint lib/. generators/**/index.js test/. --config .eslintrc.json",
     "test": "npm run eslint && npm run mocha",
-    "mocha": "mocha test/generators.test.js --timeout 300000 --exit"
+    "mocha": "mocha test/generators.test.js --timeout 300000 --exit",
+    "update-dependencies": "ncu -u -x yeoman-generator,yeoman-test"
   },
   "dependencies": {
     "@feathersjs/tools": "^0.2.3",
     "lodash": "^4.17.21",
     "node-dir": "^0.1.17",
     "randomstring": "^1.1.5",
-    "semver": "^7.3.4",
+    "semver": "^7.3.5",
     "validate-npm-package-name": "^3.0.0",
     "yeoman-generator": "^4.13.0"
   },
@@ -69,28 +70,29 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
-    "eslint": "^7.21.0",
-    "express-cassandra": "^2.5.0",
-    "feathers-cassandra": "^3.5.3",
+    "eslint": "^7.25.0",
+    "express-cassandra": "^2.6.0",
+    "feathers-cassandra": "^3.5.5",
     "feathers-knex": "^7.1.1",
     "feathers-memory": "^4.1.0",
     "feathers-mongodb": "^6.3.0",
-    "feathers-mongoose": "^8.3.1",
+    "feathers-mongoose": "^8.3.3",
     "feathers-nedb": "^5.1.0",
-    "feathers-objection": "^7.1.1",
+    "feathers-objection": "^7.1.4",
     "feathers-sequelize": "^6.2.0",
-    "helmet": "^4.4.1",
+    "helmet": "^4.6.0",
     "jshint": "^2.12.0",
-    "mocha": "^8.3.0",
-    "mongodb": "^3.6.4",
-    "mongoose": "^5.11.18",
+    "mocha": "^8.3.2",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.7",
     "nedb": "^1.8.0",
     "nodemon": "^2.0.7",
-    "objection": "^2.2.14",
-    "sequelize": "^6.5.0",
+    "npm-check-updates": "^11.5.10",
+    "objection": "^2.2.15",
+    "sequelize": "^6.6.2",
     "serve-favicon": "^2.5.0",
     "sqlite3": "^5.0.2",
-    "typescript": "^4.2.2",
+    "typescript": "^4.2.4",
     "winston": "^3.3.3",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^5.0.1"
