@@ -32,7 +32,7 @@
     "url": "https://github.com/feathersjs/generator-feathers/issues"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 12.0.0"
   },
   "scripts": {
     "publish": "git push origin --tags && npm run changelog && git push origin",
