@@ -1,8 +1,9 @@
 const app = require('<%= relativeRoot %><%= libDirectory %>/app');
 
 describe('\'<%= name %>\' service', () => {
+  const service = app.service('<%= path %>');
+  
   it('registered the service', () => {
-    const service = app.service('<%= path %>');
     expect(service).toBeTruthy();
   });
 });
